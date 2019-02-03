@@ -13,8 +13,13 @@ import DinnerShow from './components/DinnerShow';
 import Home from './components/Home';
 import MealPlan from './components/MealPlan';
 
+const store = createStore(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
 ReactDOM.render(
-  <Provider store={createStore(reducers)}>
+  <Provider store={store}>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route path="/dinner/new" component={DinnerNew} />
