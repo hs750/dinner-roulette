@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -8,15 +7,10 @@ import {
   Button, Card, Grid, Header, Icon,
 } from 'semantic-ui-react';
 
-import { fetchDinners as fd } from '../actions/DinnerActions';
 import DinnerPropType from '../proptypes/DinnerPropTypes';
 
-class DinnerIndex extends Component {
-  componentDidMount() {
-    const { fetchDinners } = this.props;
-    fetchDinners();
-  }
 
+class DinnerIndex extends Component {
   renderDinners() {
     const { dinners } = this.props;
     return _.map(dinners, dinner => (
@@ -76,7 +70,6 @@ class DinnerIndex extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchDinners: fd,
   }, dispatch);
 }
 
@@ -90,5 +83,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(DinnerIndex);
 
 DinnerIndex.propTypes = {
   dinners: DinnerPropType.isRequired,
-  fetchDinners: PropTypes.func.isRequired,
 };
