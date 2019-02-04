@@ -1,34 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { createStore } from 'redux';
+/**
+ * This file exists to get around the problem of create-react-app not liking index.jsx combined
+ * with airbnd style guide enforcing use of jsx file extention for files containing JSX content.
+ * See index.jsx for the root of React compoennts.
+ */
 
-import './index.css';
+import './index.jsx';
 import registerServiceWorker from './registerServiceWorker';
-import reducers from './reducers';
-import DinnerIndex from './components/DinnerIndex';
-import DinnerNew from './components/DinnerNew';
-import DinnerShow from './components/DinnerShow';
-import Home from './components/Home';
-import MealPlan from './components/MealPlan';
 
-const store = createStore(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
-
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Switch>
-        <Route path="/dinner/new" component={DinnerNew} />
-        <Route path="/dinner/:id" component={DinnerShow} />
-        <Route path="/dinner" component={DinnerIndex} />
-        <Route path="/meal-plan" component={MealPlan} />
-        <Route path="/" component={Home} />
-      </Switch>
-    </BrowserRouter>
-  </Provider>
-  , document.getElementById('root'));
 registerServiceWorker();

@@ -9,7 +9,7 @@ export function fetchMealPlan(reroll) {
 
   return {
     type: FETCH_MEAL_PLAN,
-    payload: mealPlan
+    payload: mealPlan,
   };
 }
 
@@ -19,9 +19,9 @@ export function fetchMealPlanDay(day) {
   return {
     type: FETCH_MEAL_PLAN_DAY,
     payload: {
-      day: day,
-      mealPlanDay: mealPlanDay
-    }
+      day,
+      mealPlanDay,
+    },
   };
 }
 
@@ -31,8 +31,8 @@ export function toggleLockMealPlanDay(day) {
   return {
     type: TOGGLE_LOCK_MEAL_PLAN_DAY,
     payload: {
-      day: day,
-      mealPlanDay: mealPlanDay
-    }
-  }
+      day,
+      mealPlanDay,
+    },
+  };
 }

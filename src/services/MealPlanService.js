@@ -2,46 +2,72 @@ import _ from 'lodash';
 
 import { fetchDinnersSizeMock, fetchRandomDinnerMock } from './DinnerService';
 
-let mealPlan = {
-  'Monday': {
+const mealPlan = {
+  Monday: {
     dinner: null,
-    isLocked: false
+    isLocked: false,
   },
-  'Tuesday': {
+  Tuesday: {
     dinner: null,
-    isLocked: false
+    isLocked: false,
   },
-  'Wednesday': {
+  Wednesday: {
     dinner: null,
-    isLocked: false
+    isLocked: false,
   },
-  'Thursday': {
+  Thursday: {
     dinner: null,
-    isLocked: false
+    isLocked: false,
   },
-  'Friday': {
+  Friday: {
     dinner: null,
-    isLocked: false
+    isLocked: false,
   },
-  'Saturday': {
+  Saturday: {
     dinner: null,
-    isLocked: false
+    isLocked: false,
   },
-  'Sunday': {
+  Sunday: {
     dinner: null,
-    isLocked: false
+    isLocked: false,
+  },
+};
+
+function isDuplicateDinner(dinner) {
+  return _.some(
+    _.values(mealPlan),
+    x => x.dinner !== null && x.dinner.id === dinner.id,
+  );
+}
+
+export function fetchMealPlanDayMock(day) {
+  if (!mealPlan[day].isLocked) {
+    let dinner = {
+      id: -1,
+      title: 'Not Enough Dinners',
+      description: 'Not enough dinners created to fill this day.',
+    };
+
+    let isDuplicate = true && fetchDinnersSizeMock() >= 8;
+    while (isDuplicate) {
+      dinner = fetchRandomDinnerMock();
+      isDuplicate = isDuplicateDinner(dinner);
+    }
+    mealPlan[day].dinner = dinner;
   }
+
+  return mealPlan[day];
 }
 
 export function fetchMealPlanMock(reroll) {
   if (!reroll) {
-    mealPlan['Monday'].isLocked = false;
-    mealPlan['Tuesday'].isLocked = false;
-    mealPlan['Wednesday'].isLocked = false;
-    mealPlan['Thursday'].isLocked = false;
-    mealPlan['Friday'].isLocked = false;
-    mealPlan['Saturday'].isLocked = false;
-    mealPlan['Sunday'].isLocked = false;
+    mealPlan.Monday.isLocked = false;
+    mealPlan.Tuesday.isLocked = false;
+    mealPlan.Wednesday.isLocked = false;
+    mealPlan.Thursday.isLocked = false;
+    mealPlan.Friday.isLocked = false;
+    mealPlan.Saturday.isLocked = false;
+    mealPlan.Sunday.isLocked = false;
   }
 
   fetchMealPlanDayMock('Monday');
@@ -55,33 +81,7 @@ export function fetchMealPlanMock(reroll) {
   return mealPlan;
 }
 
-export function fetchMealPlanDayMock(day) {
-  if (!mealPlan[day].isLocked) {
-    let dinner = {
-      id: -1,
-      title: 'Not Enough Dinners',
-      description: 'Not enough dinners created to fill this day.'
-    };
-
-    let isDuplicate = true && fetchDinnersSizeMock() >= 8;
-    while (isDuplicate) {
-      dinner = fetchRandomDinnerMock();
-      isDuplicate = isDuplicateDinner(dinner);
-    }
-    
-    mealPlan[day].dinner = dinner;
-  }
-
-  return mealPlan[day];
-}
-
 export function toggleLockMealPlanDayMock(day) {
   mealPlan[day].isLocked = !mealPlan[day].isLocked;
   return mealPlan[day];
-}
-
-function isDuplicateDinner(dinner) {
-  return _.some(
-    _.values(mealPlan), 
-    x => x.dinner !== null && x.dinner.id === dinner.id);
 }
