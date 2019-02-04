@@ -1,4 +1,6 @@
-import { createDinnerMock, deleteDinnerMock, fetchDinnerMock, fetchDinnersMock } from '../services/DinnerService';
+import {
+  createDinnerMock, deleteDinnerMock, fetchDinnerMock, fetchDinnersMock,
+} from '../services/DinnerService';
 
 export const CREATE_DINNER = 'CREATE_DINNER';
 export const DELETE_DINNER = 'DELETE_DINNER';
@@ -11,7 +13,7 @@ export function createDinner(values, callback) {
 
   return {
     type: CREATE_DINNER,
-    payload: dinner
+    payload: dinner,
   };
 }
 
@@ -21,7 +23,7 @@ export function deleteDinner(id, callback) {
 
   return {
     type: DELETE_DINNER,
-    payload: id
+    payload: id,
   };
 }
 
@@ -30,7 +32,7 @@ export function fetchDinner(id) {
 
   return {
     type: FETCH_DINNER,
-    payload: dinner
+    payload: dinner,
   };
 }
 
@@ -39,6 +41,6 @@ export function fetchDinners() {
 
   return {
     type: FETCH_DINNERS,
-    payload: dinners
+    payload: dinners,
   };
 }

@@ -1,15 +1,36 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { Button, Card, Grid, Header, Icon } from 'semantic-ui-react';
+import {
+  Button, Card, Grid, Header, Icon,
+} from 'semantic-ui-react';
 
-import { fetchDinners } from '../actions/DinnerActions';
+import { fetchDinners as fd } from '../actions/DinnerActions';
+import DinnerPropType from '../proptypes/DinnerPropTypes';
 
 class DinnerIndex extends Component {
   componentDidMount() {
-    this.props.fetchDinners();
+    const { fetchDinners } = this.props;
+    fetchDinners();
+  }
+
+  renderDinners() {
+    const { dinners } = this.props;
+    return _.map(dinners, dinner => (
+      <Card key={dinner.id}>
+        <Card.Content>
+          <Card.Header>
+            <Link key={dinner.id} to={`/dinner/${dinner.id}`}>
+              {dinner.title}
+            </Link>
+          </Card.Header>
+          <Card.Description content={dinner.description} />
+        </Card.Content>
+      </Card>
+    ));
   }
 
   render() {
@@ -28,7 +49,7 @@ class DinnerIndex extends Component {
               <Link to="/dinner/new">
                 <Button icon labelPosition="right">
                   Add Dinner
-                  <Icon name="add" />  
+                  <Icon name="add" />
                 </Button>
               </Link>
             </Button.Group>
@@ -51,35 +72,23 @@ class DinnerIndex extends Component {
       </Grid>
     );
   }
-
-  renderDinners() {
-    return _.map(this.props.dinners, dinner => {
-      return (
-        <Card key={dinner.id}>
-          <Card.Content>
-            <Card.Header>
-              <Link key={dinner.id} to={`/dinner/${dinner.id}`}>
-                {dinner.title}
-              </Link>
-            </Card.Header>
-            <Card.Description content={dinner.description} />
-          </Card.Content>
-        </Card>
-      );
-    });
-  }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchDinners: fetchDinners
+    fetchDinners: fd,
   }, dispatch);
 }
 
 function mapStateToProps(state) {
   return {
-    dinners: state.dinners
+    dinners: state.dinners,
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DinnerIndex);
+
+DinnerIndex.propTypes = {
+  dinners: DinnerPropType.isRequired,
+  fetchDinners: PropTypes.func.isRequired,
+};
