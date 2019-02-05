@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { createStore } from 'redux';
 
 import { loadState, saveState } from './localStorage';
@@ -13,10 +14,12 @@ const store = createStore(
 );
 /* eslint-enable */
 
-store.subscribe(() => {
+// Subscribe to store updates, saving dinners to local storage. Limit LS updates to once a second.
+// TODO use middleware
+store.subscribe(_.throttle(() => {
   saveState({
     dinners: store.getState().dinners,
   });
-});
+}, 1000));
 
 export default store;
