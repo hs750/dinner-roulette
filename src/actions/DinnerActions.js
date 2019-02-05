@@ -1,5 +1,7 @@
+import { v1 } from 'uuid';
+
 import {
-  createDinnerMock, deleteDinnerMock, fetchDinnerMock, fetchDinnersMock,
+  fetchDinnerMock, fetchDinnersMock,
 } from '../services/DinnerService';
 
 export const CREATE_DINNER = 'CREATE_DINNER';
@@ -8,7 +10,11 @@ export const FETCH_DINNER = 'FETCH_DINNER';
 export const FETCH_DINNERS = 'FETCH_DINNERS';
 
 export function createDinner(values, callback) {
-  const dinner = createDinnerMock(values);
+  const dinner = {
+    id: v1(),
+    title: values.title,
+    description: values.description,
+  };
   callback();
 
   return {
@@ -18,7 +24,6 @@ export function createDinner(values, callback) {
 }
 
 export function deleteDinner(id, callback) {
-  deleteDinnerMock(id);
   callback();
 
   return {

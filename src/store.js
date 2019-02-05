@@ -5,15 +5,17 @@ import reducers from './reducers';
 
 const persistedState = loadState();
 
+/* eslint-disable no-underscore-dangle */
 const store = createStore(
-    reducers,
-    persistedState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  reducers,
+  persistedState,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
+/* eslint-enable */
 
 store.subscribe(() => {
   saveState({
-    todos: store.getState().todos
+    dinners: store.getState().dinners,
   });
 });
 

@@ -2,22 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { createStore } from 'redux';
 
 import './index.css';
-import reducers from './reducers';
 import DinnerIndex from './components/DinnerIndex';
 import DinnerNew from './components/DinnerNew';
 import DinnerShow from './components/DinnerShow';
 import Home from './components/Home';
 import MealPlan from './components/MealPlan';
-
-/* eslint-disable no-underscore-dangle */
-const store = createStore(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-/* eslint-enable */
+import store from './store';
 
 ReactDOM.render(
   <Provider store={store}>
