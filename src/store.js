@@ -1,18 +1,21 @@
 import _ from 'lodash';
-import { createStore } from 'redux';
+import { createStore, compose } from 'redux';
 
 import { loadState, saveState } from './localStorage';
 import reducers from './reducers';
+import middleware from './middleware';
 
 const persistedState = loadState();
 
 /* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+/* eslint-enable */
+
 const store = createStore(
   reducers,
   persistedState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  composeEnhancers(middleware),
 );
-/* eslint-enable */
 
 // Subscribe to store updates, saving dinners to local storage. Limit LS updates to once a second.
 // TODO use middleware

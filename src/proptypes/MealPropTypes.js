@@ -11,12 +11,12 @@ export const MealDayPropTypes = PropTypes.shape(
 
 export const MealPropTypes = PropTypes.shape(
   {
-    Monday: MealDayPropTypes,
-    Tuesday: MealDayPropTypes,
-    Wednesday: MealDayPropTypes,
-    Thursday: MealDayPropTypes,
-    Friday: MealDayPropTypes,
-    Saturday: MealDayPropTypes,
-    Sunday: MealDayPropTypes,
+    Monday: MealDayPropTypes.isRequired,
+    Tuesday: MealDayPropTypes.isRequired,
+    Wednesday: MealDayPropTypes.isRequired,
+    Thursday: MealDayPropTypes.isRequired,
+    Friday: MealDayPropTypes.isRequired,
+    Saturday: MealDayPropTypes.isRequired,
+    Sunday: MealDayPropTypes.isRequired,
   },
 );
