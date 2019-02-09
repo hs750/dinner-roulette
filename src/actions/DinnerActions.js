@@ -1,9 +1,5 @@
 import { v1 } from 'uuid';
 
-import {
-  fetchDinnerMock, fetchDinnersMock,
-} from '../services/DinnerService';
-
 export const CREATE_DINNER = 'CREATE_DINNER';
 export const DELETE_DINNER = 'DELETE_DINNER';
 export const FETCH_DINNER = 'FETCH_DINNER';
@@ -29,23 +25,5 @@ export function deleteDinner(id, callback) {
   return {
     type: DELETE_DINNER,
     payload: id,
-  };
-}
-
-export function fetchDinner(id) {
-  const dinner = fetchDinnerMock(id);
-
-  return {
-    type: FETCH_DINNER,
-    payload: dinner,
-  };
-}
-
-export function fetchDinners() {
-  const dinners = fetchDinnersMock();
-
-  return {
-    type: FETCH_DINNERS,
-    payload: dinners,
   };
 }
