@@ -61,25 +61,23 @@ function generateMealPlanForDay(currentMealPlan, dinners, day) {
   return currentMealPlan[day].dinner;
 }
 
+function rerollMealPlanForDay(currentMealPlan, dinners, day, reroll) {
+  if (reroll) {
+    return generateMealPlanForDay(currentMealPlan, dinners, day);
+  }
+  return currentMealPlan[day].dinner || generateMealPlanForDay(currentMealPlan, dinners, day);
+}
+
 function generateMealPlan(currentMealPlan, dinners, reroll) {
   const mealPlan = currentMealPlan;
-  if (!reroll) {
-    mealPlan.Monday.isLocked = false;
-    mealPlan.Tuesday.isLocked = false;
-    mealPlan.Wednesday.isLocked = false;
-    mealPlan.Thursday.isLocked = false;
-    mealPlan.Friday.isLocked = false;
-    mealPlan.Saturday.isLocked = false;
-    mealPlan.Sunday.isLocked = false;
-  }
 
-  mealPlan.Monday.dinner = generateMealPlanForDay(currentMealPlan, dinners, 'Monday');
-  mealPlan.Tuesday.dinner = generateMealPlanForDay(currentMealPlan, dinners, 'Tuesday');
-  mealPlan.Wednesday.dinner = generateMealPlanForDay(currentMealPlan, dinners, 'Wednesday');
-  mealPlan.Thursday.dinner = generateMealPlanForDay(currentMealPlan, dinners, 'Thursday');
-  mealPlan.Friday.dinner = generateMealPlanForDay(currentMealPlan, dinners, 'Friday');
-  mealPlan.Saturday.dinner = generateMealPlanForDay(currentMealPlan, dinners, 'Saturday');
-  mealPlan.Sunday.dinner = generateMealPlanForDay(currentMealPlan, dinners, 'Sunday');
+  mealPlan.Monday.dinner = rerollMealPlanForDay(currentMealPlan, dinners, 'Monday', reroll);
+  mealPlan.Tuesday.dinner = rerollMealPlanForDay(currentMealPlan, dinners, 'Tuesday', reroll);
+  mealPlan.Wednesday.dinner = rerollMealPlanForDay(currentMealPlan, dinners, 'Wednesday', reroll);
+  mealPlan.Thursday.dinner = rerollMealPlanForDay(currentMealPlan, dinners, 'Thursday', reroll);
+  mealPlan.Friday.dinner = rerollMealPlanForDay(currentMealPlan, dinners, 'Friday', reroll);
+  mealPlan.Saturday.dinner = rerollMealPlanForDay(currentMealPlan, dinners, 'Saturday', reroll);
+  mealPlan.Sunday.dinner = rerollMealPlanForDay(currentMealPlan, dinners, 'Sunday', reroll);
 
   return mealPlan;
 }

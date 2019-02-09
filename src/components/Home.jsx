@@ -20,27 +20,18 @@ const Home = () => (
         <Button.Group>
           <Link to="/dinner">
             <Button icon labelPosition="left">
-              View Dinners
+              Manage Dinners
               <Icon name="search" />
             </Button>
           </Link>
           <Button.Or />
-          <Link to="/dinner/new">
+          <Link to="/meal-plan">
             <Button icon labelPosition="right">
-              Add Dinner
-              <Icon name="add" />
+              View Meal Plan
+              <Icon name="calendar alternate outline" />
             </Button>
           </Link>
         </Button.Group>
-      </Grid.Column>
-    </Grid.Row>
-    <Grid.Row centered>
-      <Grid.Column textAlign="center">
-        <Link to="/meal-plan">
-          <Button primary>
-            <Button.Content>Spin the Wheel!</Button.Content>
-          </Button>
-        </Link>
       </Grid.Column>
     </Grid.Row>
   </Grid>
