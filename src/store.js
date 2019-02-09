@@ -22,6 +22,7 @@ const store = createStore(
 store.subscribe(_.throttle(() => {
   saveState({
     dinners: store.getState().dinners,
+    mealPlan: store.getState().mealPlan,
   });
 }, 1000));
 
