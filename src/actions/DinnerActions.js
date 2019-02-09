@@ -1,5 +1,7 @@
 import { v1 } from 'uuid';
 
+import { SAVE_DINNERS } from '../middleware/DinnerSave';
+
 export const CREATE_DINNER = 'CREATE_DINNER';
 export const DELETE_DINNER = 'DELETE_DINNER';
 export const FETCH_DINNER = 'FETCH_DINNER';
@@ -32,5 +34,11 @@ export function deleteDinner(id, callback) {
 export function loadDefaultDinners() {
   return {
     type: LOAD_DEFAULT_DINNERS,
+  };
+}
+
+export function saveDinners() {
+  return {
+    type: SAVE_DINNERS,
   };
 }

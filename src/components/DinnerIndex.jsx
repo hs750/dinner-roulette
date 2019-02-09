@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import {
-  Button, Card, Grid, Header, Icon, Message,
+  Button, Card, Grid, Header, Icon, Message, Popup,
 } from 'semantic-ui-react';
 
 import DinnerPropType from '../proptypes/DinnerPropTypes';
-import { loadDefaultDinners as ldd } from '../actions/DinnerActions';
+import { loadDefaultDinners as ldd, saveDinners as sd } from '../actions/DinnerActions';
 
 class DinnerIndex extends Component {
   renderNoDinners() {
@@ -54,6 +54,7 @@ class DinnerIndex extends Component {
   }
 
   render() {
+    const { saveDinners } = this.props;
     return (
       <Grid padded>
         <Grid.Row>
@@ -72,6 +73,9 @@ class DinnerIndex extends Component {
                   <Icon name="add" />
                 </Button>
               </Link>
+            </Button.Group>
+            <Button.Group floated="right">
+              <Popup trigger={<Button circular icon="save" onClick={saveDinners} />} content="Save dinners to file." />
             </Button.Group>
           </Grid.Column>
         </Grid.Row>
@@ -97,6 +101,7 @@ class DinnerIndex extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     loadDefaultDinners: ldd,
+    saveDinners: sd,
   }, dispatch);
 }
 
@@ -111,4 +116,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(DinnerIndex);
 DinnerIndex.propTypes = {
   dinners: DinnerPropType.isRequired,
   loadDefaultDinners: PropTypes.func.isRequired,
+  saveDinners: PropTypes.func.isRequired,
 };
