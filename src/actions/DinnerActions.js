@@ -4,6 +4,7 @@ export const CREATE_DINNER = 'CREATE_DINNER';
 export const DELETE_DINNER = 'DELETE_DINNER';
 export const FETCH_DINNER = 'FETCH_DINNER';
 export const FETCH_DINNERS = 'FETCH_DINNERS';
+export const LOAD_DEFAULT_DINNERS = 'LOAD_DEFAULT_DINNERS';
 
 export function createDinner(values, callback) {
   const dinner = {
@@ -25,5 +26,11 @@ export function deleteDinner(id, callback) {
   return {
     type: DELETE_DINNER,
     payload: id,
+  };
+}
+
+export function loadDefaultDinners() {
+  return {
+    type: LOAD_DEFAULT_DINNERS,
   };
 }
