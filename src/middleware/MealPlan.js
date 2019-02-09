@@ -1,6 +1,8 @@
 import _ from 'lodash';
 
 export const GENERATE_MEAL_PLAN = 'GENERATE_MEAL_PLAN';
+export const GENERATE_MEAL_PLAN_DAY = 'GENERATE_MEAL_PLAN_DAY';
+export const TOGGLE_LOCK_MEAL_PLAN_DAY = 'TOGGLE_LOCK_MEAL_PLAN_DAY';
 
 const initialMealPlan = {
   Monday: {
@@ -48,7 +50,7 @@ function generateMealPlanForDay(currentMealPlan, dinners, day) {
       description: 'Not enough dinners created to fill this day.',
     };
 
-    let isDuplicate = true && dinners.length >= 8;
+    let isDuplicate = true && Object.keys(dinners).length >= 8;
     while (isDuplicate) {
       dinner = _.sample(dinners);
       isDuplicate = isDuplicateDinner(currentMealPlan, dinner);
@@ -56,11 +58,11 @@ function generateMealPlanForDay(currentMealPlan, dinners, day) {
     return dinner;
   }
 
-  return _.cloneDeep(currentMealPlan[day]);
+  return currentMealPlan[day].dinner;
 }
 
 function generateMealPlan(currentMealPlan, dinners, reroll) {
-  const mealPlan = _.cloneDeep(currentMealPlan);
+  const mealPlan = currentMealPlan;
   if (!reroll) {
     mealPlan.Monday.isLocked = false;
     mealPlan.Tuesday.isLocked = false;
@@ -82,21 +84,51 @@ function generateMealPlan(currentMealPlan, dinners, reroll) {
   return mealPlan;
 }
 
-const mealPlanMiddleware = store => next => (action) => {
-  if (action.type === GENERATE_MEAL_PLAN) {
-    let { mealPlan } = store.getState();
-    const { dinners } = store.getState();
-    if (!mealPlan) {
-      mealPlan = initialMealPlan;
-    }
-    mealPlan = generateMealPlan(mealPlan, dinners, action.payload.reroll);
+function getMealPlanFromStoreOrDefault(store) {
+  let { mealPlan } = store.getState();
+  if (!mealPlan) {
+    mealPlan = _.cloneDeep(initialMealPlan);
+  }
+  return mealPlan;
+}
 
-    next({
-      type: action.payload.nextAction,
-      payload: mealPlan,
-    });
-  } else {
-    next(action);
+const mealPlanMiddleware = store => next => (action) => {
+  switch (action.type) {
+    case GENERATE_MEAL_PLAN: {
+      let mealPlan = getMealPlanFromStoreOrDefault(store);
+      const { dinners } = store.getState();
+      mealPlan = generateMealPlan(mealPlan, dinners, action.payload.reroll);
+
+      next({
+        type: action.payload.nextAction,
+        payload: mealPlan,
+      });
+      break;
+    }
+    case GENERATE_MEAL_PLAN_DAY: {
+      const mealPlan = getMealPlanFromStoreOrDefault(store);
+      const { dinners } = store.getState();
+      const { day } = action.payload;
+      mealPlan[day].dinner = generateMealPlanForDay(mealPlan, dinners, day);
+
+      next({
+        type: action.payload.nextAction,
+        payload: mealPlan,
+      });
+      break;
+    }
+    case TOGGLE_LOCK_MEAL_PLAN_DAY: {
+      const mealPlan = getMealPlanFromStoreOrDefault(store);
+      const { day } = action.payload;
+      mealPlan[day].isLocked = !mealPlan[day].isLocked;
+      next({
+        type: action.payload.nextAction,
+        payload: mealPlan,
+      });
+      break;
+    }
+    default:
+      next(action);
   }
 };
 
