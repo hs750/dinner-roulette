@@ -7,7 +7,7 @@ import {
   Button, Dimmer, Grid, Header, Icon, Loader, Segment,
 } from 'semantic-ui-react';
 
-import { deleteDinner as dd, fetchDinner as fd } from '../actions/DinnerActions';
+import { deleteDinner as dd } from '../actions/DinnerActions';
 import DinnerPropType from '../proptypes/DinnerPropTypes';
 import HistoryPropType from '../proptypes/HistoryPropTypes';
 
@@ -86,7 +86,6 @@ class DinnerShow extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     deleteDinner: dd,
-    fetchDinner: fd,
   }, dispatch);
 }
 

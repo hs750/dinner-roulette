@@ -1,14 +1,17 @@
-import {
-  createDinnerMock, deleteDinnerMock, fetchDinnerMock, fetchDinnersMock,
-} from '../services/DinnerService';
+import { v1 } from 'uuid';
 
 export const CREATE_DINNER = 'CREATE_DINNER';
 export const DELETE_DINNER = 'DELETE_DINNER';
 export const FETCH_DINNER = 'FETCH_DINNER';
 export const FETCH_DINNERS = 'FETCH_DINNERS';
+export const LOAD_DEFAULT_DINNERS = 'LOAD_DEFAULT_DINNERS';
 
 export function createDinner(values, callback) {
-  const dinner = createDinnerMock(values);
+  const dinner = {
+    id: v1(),
+    title: values.title,
+    description: values.description,
+  };
   callback();
 
   return {
@@ -18,7 +21,6 @@ export function createDinner(values, callback) {
 }
 
 export function deleteDinner(id, callback) {
-  deleteDinnerMock(id);
   callback();
 
   return {
@@ -27,20 +29,8 @@ export function deleteDinner(id, callback) {
   };
 }
 
-export function fetchDinner(id) {
-  const dinner = fetchDinnerMock(id);
-
+export function loadDefaultDinners() {
   return {
-    type: FETCH_DINNER,
-    payload: dinner,
-  };
-}
-
-export function fetchDinners() {
-  const dinners = fetchDinnersMock();
-
-  return {
-    type: FETCH_DINNERS,
-    payload: dinners,
+    type: LOAD_DEFAULT_DINNERS,
   };
 }

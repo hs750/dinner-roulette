@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const dinners = [
   {
     id: 1,
@@ -133,46 +131,4 @@ const dinners = [
   },
 ];
 
-let id = 27;
-
-function nextId() {
-  id += 1;
-  return id;
-}
-
-export function createDinnerMock(values) {
-  const dinner = {
-    id: nextId(),
-    title: values.title,
-    description: values.description,
-  };
-
-  dinners.push(dinner);
-
-  return dinner;
-}
-
-export function deleteDinnerMock(idString) {
-  const idToDelete = parseInt(idString, 10);
-  dinners.splice(
-    dinners.findIndex(x => x.id === idToDelete),
-    1,
-  );
-}
-
-export function fetchRandomDinnerMock() {
-  return _.sample(dinners);
-}
-
-export function fetchDinnerMock(idString) {
-  const idToFetch = parseInt(idString, 10);
-  return dinners.find(x => x.id === idToFetch);
-}
-
-export function fetchDinnersMock() {
-  return dinners;
-}
-
-export function fetchDinnersSizeMock() {
-  return dinners.length;
-}
+export default dinners;
